@@ -57,22 +57,3 @@ def LoRaUnpackRawFrame(binaryPayload):
 def LoRaUnpackOMSFrame(binaryPayload):
 
     return {"xD" : "lol"}
-
-
-def ParseDIF(DIFByte):
-    pass
-
-
-def ParseVIF(VIFByte):
-    
-    if VIFByte[0] == "1":
-        isExtended = True
-    
-    if VIFByte[1:4] == "0010":
-        print(coeff = 10 ** (int(VIFByte[5:7],2) - 6))
-
-def ParseVIFE(VIFEByte):
-    pass
-
-
-ParseVIF("00010001")
