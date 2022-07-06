@@ -47,6 +47,7 @@ def HandleLoRaDecrypt():
         
         payloadDict = utils.LoRaUnpack(payloadEncryptedHexString)
 
+        txtLoRaUnpacked.delete(0,tk.END)
         for key in payloadDict:
             txtLoRaUnpacked.insert(tk.END, f"{key} = {payloadDict[key]}\n")
     
@@ -76,6 +77,12 @@ entSeqNumber = tk.Entry(master=frmAddSeq)
 btnLoRa = tk.Button(master=window, text="Parse Frame", command=HandleLoRaDecrypt)
 entOutputLoRa = tk.Entry(master=window)
 txtLoRaUnpacked = tk.Text(master=window)
+
+
+#na czas testów - potem do usunięcia
+entDeviceAddress.insert(0, "010bb560".upper())
+entAppSessionKey.insert(0, "a6790a029614ff3f6adbe437478e031a".upper())
+
 
 lblInput.grid(row=0, column=0, sticky="ws", padx=5, pady=5)
 entInput.grid(row=1, column=0, sticky="ew", padx=5, pady=5)
