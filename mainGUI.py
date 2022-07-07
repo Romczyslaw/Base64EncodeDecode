@@ -1,7 +1,9 @@
-from cgitb import text
+from optparse import Values
+from re import M
 import tkinter as tk
 import utils
 from lora.crypto import loramac_decrypt 
+from tkinter import CENTER, ttk
 
 func = utils.decodeB64
 
@@ -45,11 +47,16 @@ def HandleLoRaDecrypt():
         entOutputLoRa.delete(0, tk.END)
         entOutputLoRa.insert(0, payloadEncryptedHexString.upper())
         
-        payloadDict = utils.LoRaUnpack(payloadEncryptedHexString)
+        #payloadDict = utils.LoRaUnpack(payloadEncryptedHexString)
+        payloadDict = utils.LoRaUnpack("04113EB0983B441100000000426C244C02FD74000003FD17032C0004913CC2190200033933F9310259114202651B0C")
 
-        txtLoRaUnpacked.delete(0,tk.END)
+        #txtLoRaUnpacked.delete(1.0,tk.END)
+
+        i = 0
         for key in payloadDict:
-            txtLoRaUnpacked.insert(tk.END, f"{key} = {payloadDict[key]}\n")
+            #txtLoRaUnpacked.insert(tk.END, f"{key} = {payloadDict[key]}\n")
+            tableLoRaUpacked.insert(parent="", index="end", iid=i, text="", values=(payloadDict[key], key))
+            i+=1
     
     except:
         pass
@@ -76,13 +83,19 @@ lblSeqNumber = tk.Label(master=frmAddSeq, text="Frame Counter")
 entSeqNumber = tk.Entry(master=frmAddSeq)
 btnLoRa = tk.Button(master=window, text="Parse Frame", command=HandleLoRaDecrypt)
 entOutputLoRa = tk.Entry(master=window)
-txtLoRaUnpacked = tk.Text(master=window)
+#txtLoRaUnpacked = tk.Text(master=window)
 
+tableLoRaUpacked = ttk.Treeview(master=window)
+tableLoRaUpacked["columns"] = ("Value", "Name")
+tableLoRaUpacked.column("#0", width=0, stretch=tk.NO)
+tableLoRaUpacked.heading("Value", text= "Value", anchor=tk.CENTER)
+tableLoRaUpacked.heading("Name", text= "Name", anchor=tk.CENTER)
 
-#na czas testów - potem do usunięcia
+#na czas testów - potem do usunięcia-----------------------------------
 entDeviceAddress.insert(0, "010bb560".upper())
 entAppSessionKey.insert(0, "a6790a029614ff3f6adbe437478e031a".upper())
-
+entSeqNumber.insert(0, "37")
+#----------------------------------------------------------------------
 
 lblInput.grid(row=0, column=0, sticky="ws", padx=5, pady=5)
 entInput.grid(row=1, column=0, sticky="ew", padx=5, pady=5)
@@ -103,10 +116,8 @@ entSeqNumber.grid(row=0, column=3, sticky="e", padx=5, pady=5)
 
 entOutputLoRa.grid(row=8, column=0, sticky="ew", padx=5,pady=5)
 btnLoRa.grid(row=8, column=1, sticky="ew", padx=5, pady=5)
-
-
-
-txtLoRaUnpacked.grid(row=11, column=0, padx=5, pady=5)
+#txtLoRaUnpacked.grid(row=11, column=0, padx=5, pady=5)
+tableLoRaUpacked.grid(row=11, column=0, padx=5, pady=5)
 
 entInput.focus()
 

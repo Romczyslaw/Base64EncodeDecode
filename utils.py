@@ -1,4 +1,5 @@
 import base64
+import OMS
 
 def encodeB64(payloadToEncode):
     return(base64.b64encode(bytes(payloadToEncode,"utf-8")))
@@ -53,7 +54,9 @@ def LoRaUnpackRawFrame(binaryPayload):
 # SonicoNano LoRa OMS Frame
 # YC5PQEoIcZv4N4OnIkMuqgRgGIX2GUlJ8ZeCLFWQKWY0fDurxI1ubbpcfz+6Gzk=
 # FrameCounter 37
-# 0411A15A993B441100000000426C244C02FD74000004FD17032C0004913C5E6F0100033933F9310259114202657D0B
+# 0411A15A993B441100000000426C244C02FD74000003FD17032C0004913C5E6F0100033933F9310259114202657D0B
 def LoRaUnpackOMSFrame(binaryPayload):
 
-    return {"xD" : "lol"}
+    LoRaFrame = OMS.OMSLoRaUplinkFrame(binaryPayload)
+
+    return LoRaFrame.getDictOfObjects()
